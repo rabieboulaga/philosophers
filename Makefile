@@ -6,7 +6,7 @@
 #    By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/21 16:47:31 by rboulaga          #+#    #+#              #
-#    Updated: 2024/08/27 13:37:05 by rboulaga         ###   ########.fr        #
+#    Updated: 2024/09/05 16:45:04 by rboulaga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = philo
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror  #-fsanitize=address -g3
- 
+CFLAGS = -Wall -Wextra -Werror # -fsanitize=thread 
+	
 SRC = philo.c\
 	parsing.c\
 	philo_utils.c\

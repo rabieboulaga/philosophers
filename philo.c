@@ -6,12 +6,20 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:13:54 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/08/27 13:12:25 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/05 16:43:00 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 # include <pthread.h>
+
+// int     monitor(t_data *data, t_data *philo)
+// {
+//     while (1)
+//     {
+//         if (philo)
+//     }
+// }
 
 int philo(int ac, char **av)
 {
@@ -23,14 +31,13 @@ int philo(int ac, char **av)
         philo = malloc(sizeof(t_info));
         data = malloc(sizeof(t_data));
         philo->cdata = data;
-        build_structurs(ac, av, philo, data);
+        if (build_structurs(ac, av, philo, data) == 1)
+            return 1;
         run_cycle(data, philo);
+        // monitor(data, philo);
     }
     else
-    {
-        printf("Error");
         return (1); 
-    }
     return(0); 
 }
 

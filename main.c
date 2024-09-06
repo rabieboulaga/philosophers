@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 11:32:28 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/08/27 13:28:23 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/05 16:30:31 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int main(int ac, char **av)
 {
     if(philo(ac, av))
-        return 1;
-    while(1) ;
+    {    
+        printf("Error, Something is wrong\n");
+        return 1;     
+    }    
     return 0;
 }
