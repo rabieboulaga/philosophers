@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:40:21 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/08/23 15:13:07 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/06 23:46:32 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int checker(int ac, char **av)
 
 int parsing(int ac, char **av)
 {
-    
     if (ac == 5 || ac == 6)
     {
         if (checker(ac, av))

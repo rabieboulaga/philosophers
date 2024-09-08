@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:29:38 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/06 10:51:50 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/07 18:25:03 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,6 @@ void    elements(t_info *philo, t_data *data)
 
 int    build_structurs(int ac, char **av, t_info *philo, t_data *data)
 {   
-    // t_info *tmp;
-    
-    // tmp = philo;
     memset(data, 0, sizeof(t_data));
     data->philos = ft_atoi(av[1]);
     data->t_die = ft_atoi(av[2]);
@@ -88,21 +85,10 @@ int    build_structurs(int ac, char **av, t_info *philo, t_data *data)
     pthread_mutex_init(&data->time, NULL);
     if (ac == 6)
         data->n_meals = ft_atoi(av[5]);
-    if (data->n_meals < 0)
-        return 1;
+    // if (data->n_meals < 0)
+    //     return 1;
     if (ac != 6)
         data->flag_meals = -1; 
     elements(philo, data);
-    // philo->id = 1;
-    
-    // philo->l_meal = philo->cdata->n_meals;
-    // philo->the_deid = 0;
-    // philo->right = NULL;
-    // philo->left = NULL;
-    // list_info(philo, data->philos);
-    // while (tmp->right)
-    //     tmp = tmp->right;
-    // tmp->right = philo;
-    // philo->left = tmp;
     return 0;
 }
