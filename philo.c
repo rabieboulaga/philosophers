@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:13:54 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/07 19:40:58 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/09 10:01:13 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 // void    *routine_mn(void    *arg)
 // {
-    
+       
     
 
 
@@ -24,10 +24,10 @@
 
 // int     monitor(t_data *data, t_info *philo)
 // {
-//     while (1)
-//     {
-        
-//     }
+//     pthread_t monitor;
+
+//     pthread_create(&monitor, NULL, routine_mn, philo);
+//     pthread_join(monitor, NULL);
 // }
 
 int philo(int ac, char **av)
@@ -49,6 +49,52 @@ int philo(int ac, char **av)
         return (1);
     return(0); 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // # define N 20000000

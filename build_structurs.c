@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:29:38 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/07 18:25:03 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:17:44 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ void    list_info(t_info *philo, int n)
         newphilo->right = NULL;
         newphilo->left = NULL;
         newphilo->id = i;
+        philo->start_eat = 0;
         newphilo->the_deid = 0;
         newphilo->l_meal = philo->cdata->n_meals;
+        pthread_mutex_init(&newphilo->mutex_eat, NULL);
         pthread_mutex_init(&newphilo->fork, NULL);
         ft_lstadd_back(philo, newphilo);
         tmp = philo;
@@ -66,6 +68,7 @@ void    elements(t_info *philo, t_data *data)
     philo->the_deid = 0;
     philo->right = NULL;
     philo->left = NULL;
+    philo->start_eat = 0;
     list_info(philo, data->philos);
     while (tmp->right)
         tmp = tmp->right;
@@ -80,13 +83,12 @@ int    build_structurs(int ac, char **av, t_info *philo, t_data *data)
     data->t_eat = ft_atoi(av[3]);
     data->t_sleep = ft_atoi(av[4]);
     pthread_mutex_init(&philo->fork, NULL);
-    pthread_mutex_init(&data->mutex, NULL);
+    pthread_mutex_init(&philo->mutex_eat, NULL);
     pthread_mutex_init(&data->print, NULL);
     pthread_mutex_init(&data->time, NULL);
+    pthread_mutex_init(&data->mutex_flag, NULL);
     if (ac == 6)
         data->n_meals = ft_atoi(av[5]);
-    // if (data->n_meals < 0)
-    //     return 1;
     if (ac != 6)
         data->flag_meals = -1; 
     elements(philo, data);

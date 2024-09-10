@@ -6,11 +6,14 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 12:51:39 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/07 19:44:06 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/09 19:24:46 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+
+
 
 void    sleeping(t_info *philo)
 {
@@ -28,10 +31,13 @@ int    even_take_forks(t_info *philo)
     pthread_mutex_lock(&philo->fork);
     my_printf(philo, "has taken a fork");
     my_printf(philo, "is eating");
+    // pthread_mutex_lock(&philo->mutex_eat);
+    // philo->start_eat = get_current_time();
+    // pthread_mutex_unlock(&philo->mutex_eat);
     philo->l_meal--;
     my_usleep(philo->cdata->t_eat);
-    pthread_mutex_unlock(&philo->right->fork);
     pthread_mutex_unlock(&philo->fork);
+    pthread_mutex_unlock(&philo->right->fork);
     return 0;
 }
 
@@ -43,11 +49,14 @@ int    odd_take_forks(t_info *philo)
     my_printf(philo, "has taken a fork");
     pthread_mutex_lock(&philo->right->fork);
     my_printf(philo, "has taken a fork");
+    // pthread_mutex_lock(&philo->mutex_eat);
+    // philo->start_eat = get_current_time();
+    // pthread_mutex_unlock(&philo->mutex_eat);
     my_printf(philo, "is eating");
     philo->l_meal--;
     my_usleep(philo->cdata->t_eat);
-    pthread_mutex_unlock(&philo->fork);
     pthread_mutex_unlock(&philo->right->fork);
+    pthread_mutex_unlock(&philo->fork);
     return 0;
 }
 
@@ -55,7 +64,7 @@ void    *routine(void   *arg)
 {
     t_info *philo = (t_info *)arg;
     if (philo->id % 2 == 0)
-        usleep(500);   
+        usleep(philo->cdata->t_eat * 500);   
     while (1)
     {
         if (philo->id % 2 != 0)
@@ -69,6 +78,27 @@ void    *routine(void   *arg)
     return (NULL);
 }
 
+// void    monitor(t_info *philo)
+// {
+//     while (1)
+//     {
+//         pthread_mutex_lock(&philo->cdata->mutex_flag);
+//         pthread_mutex_lock(&philo->mutex_eat);
+           
+//         if (philo->start_eat - (get_current_time()) > philo->cdata->t_die)
+//         {    
+//             philo->cdata->flag = 1;
+//             pthread_mutex_unlock(&philo->cdata->mutex_flag);
+//             pthread_mutex_unlock(&philo->mutex_eat);
+//             break;
+//         }
+//         pthread_mutex_unlock(&philo->mutex_eat);
+//         pthread_mutex_unlock(&philo->cdata->mutex_flag);
+//         philo = philo->right;
+
+//     }
+// } 
+
 void    run_cycle(t_data *data, t_info *philo)
 {
     int i;
@@ -79,9 +109,13 @@ void    run_cycle(t_data *data, t_info *philo)
     {
         pthread_create(&philo->thread, NULL, routine, philo);
         i++;
+        pthread_mutex_lock(&philo->mutex_eat);
+        philo->start_eat = get_current_time();     
+        pthread_mutex_unlock(&philo->mutex_eat);
         philo = philo->right;
-    } 
+    }
     i = 0;
+    // monitor(philo); 
     while (i < data->philos)
     {
         pthread_join(philo->thread, NULL);
