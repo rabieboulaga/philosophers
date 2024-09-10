@@ -6,29 +6,34 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:13:54 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/09 10:01:13 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/10 16:20:03 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 # include <pthread.h>
 
-// void    *routine_mn(void    *arg)
-// {
-       
-    
+void    monitor(t_info *philo)
+{
+    while (1)
+    {
+        pthread_mutex_lock(&philo->cdata->mutex_flag);
+        pthread_mutex_lock(&philo->mutex_eat);
+           
+        if ((get_current_time()) - (philo->start_eat) > philo->cdata->t_die)
+        {   
+            philo->cdata->flag = 1;
+            my_printf(philo, "this philo is die right now");    
+            pthread_mutex_unlock(&philo->mutex_eat);
+            pthread_mutex_unlock(&philo->cdata->mutex_flag);
+            break;
+        }
+        pthread_mutex_unlock(&philo->mutex_eat);
+        pthread_mutex_unlock(&philo->cdata->mutex_flag);
+        philo = philo->right;
 
-
-//     return (NULL);
-// }
-
-// int     monitor(t_data *data, t_info *philo)
-// {
-//     pthread_t monitor;
-
-//     pthread_create(&monitor, NULL, routine_mn, philo);
-//     pthread_join(monitor, NULL);
-// }
+    }
+}
 
 int philo(int ac, char **av)
 {
@@ -42,8 +47,7 @@ int philo(int ac, char **av)
         philo->cdata = data;
         if (build_structurs(ac, av, philo, data) == 1) 
             return (1);
-        run_cycle(data, philo);
-        
+        run_cycle(data, philo);        
     }
     else
         return (1);
