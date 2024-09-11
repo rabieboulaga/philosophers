@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 12:51:39 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/10 16:22:17 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/11 11:25:19 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,15 @@ void    *routine(void   *arg)
         else
             even_take_forks(philo);
         if  (philo->l_meal == 0 && philo->cdata->flag_meals != -1)
+        {   
+            pthread_mutex_lock(&philo->cdata->monitor);
+            philo->cdata->monitor_flag++;
+            pthread_mutex_unlock(&philo->cdata->monitor);
+            // pthread_mutex_lock(&philo->mutex_eat);
+            // philo->start_eat = -1;
+            // pthread_mutex_lock(&philo->mutex_eat);
             break ;
+        }
         sleeping(philo);
     }
     return (NULL);

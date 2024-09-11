@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:13:54 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/10 16:20:03 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/11 11:24:30 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,15 @@ void    monitor(t_info *philo)
 {
     while (1)
     {
+        pthread_mutex_lock(&philo->cdata->monitor);
+        if (philo->cdata->monitor_flag == philo->cdata->philos)
+        {   
+            printf ("that's good\n"); 
+            return;
+        }
+        pthread_mutex_unlock(&philo->cdata->monitor);
         pthread_mutex_lock(&philo->cdata->mutex_flag);
         pthread_mutex_lock(&philo->mutex_eat);
-           
         if ((get_current_time()) - (philo->start_eat) > philo->cdata->t_die)
         {   
             philo->cdata->flag = 1;
@@ -31,7 +37,6 @@ void    monitor(t_info *philo)
         pthread_mutex_unlock(&philo->mutex_eat);
         pthread_mutex_unlock(&philo->cdata->mutex_flag);
         philo = philo->right;
-
     }
 }
 

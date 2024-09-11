@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:15:20 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/09 14:16:16 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/11 11:23:04 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 typedef struct c_stack
 {
-
+    int monitor_flag;
     int flag;
     int t_eat;
     size_t t_die;
@@ -34,6 +34,7 @@ typedef struct c_stack
     int n_meals;
     int flag_meals;
     size_t  start_time;
+    pthread_mutex_t monitor;
     pthread_mutex_t print;
     pthread_mutex_t time;
     pthread_mutex_t mutex_flag;
@@ -42,7 +43,7 @@ typedef struct c_stack
 typedef struct c_info
 {
     pthread_mutex_t mutex_eat;
-    size_t start_eat;
+    long long start_eat;
     int id;
     int l_meal;
     pthread_t thread;

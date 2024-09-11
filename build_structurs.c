@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:29:38 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/09 14:17:44 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/11 11:23:30 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int    build_structurs(int ac, char **av, t_info *philo, t_data *data)
     pthread_mutex_init(&data->print, NULL);
     pthread_mutex_init(&data->time, NULL);
     pthread_mutex_init(&data->mutex_flag, NULL);
+    pthread_mutex_init(&data->monitor, NULL);
     if (ac == 6)
         data->n_meals = ft_atoi(av[5]);
     if (ac != 6)
