@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 12:51:39 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/11 11:25:19 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:34:08 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 void    sleeping(t_info *philo)
 {
+    // if (philo->cdata->flag == 1)
+            // return;
     my_printf(philo, "is sleeping");
     my_usleep(philo->cdata->t_sleep);
     my_printf(philo, "is thinking");
@@ -24,6 +26,8 @@ void    sleeping(t_info *philo)
 
 int    even_take_forks(t_info *philo)
 {
+    // if (philo->cdata->flag == 1)
+        //    return 0;
     if  (philo->l_meal == 0 && philo->cdata->flag_meals != -1)
         return 0;
     pthread_mutex_lock(&philo->fork);
@@ -43,6 +47,8 @@ int    even_take_forks(t_info *philo)
 
 int    odd_take_forks(t_info *philo)
 {
+    // if (philo->cdata->flag == 1)
+        //    return 0;
     if  (philo->l_meal == 0 && philo->cdata->flag_meals != -1)
         return 0;
     pthread_mutex_lock(&philo->right->fork);
@@ -55,8 +61,8 @@ int    odd_take_forks(t_info *philo)
     my_printf(philo, "is eating");
     philo->l_meal--;
     my_usleep(philo->cdata->t_eat);
-    pthread_mutex_unlock(&philo->right->fork);
     pthread_mutex_unlock(&philo->fork);
+    pthread_mutex_unlock(&philo->right->fork);
     return 0;
 }
 
@@ -64,9 +70,11 @@ void    *routine(void   *arg)
 {
     t_info *philo = (t_info *)arg;
     if (philo->id % 2 == 0)
-        usleep(philo->cdata->t_eat * 500);   
+        usleep(500);   
     while (1)
     {
+        if (philo->cdata->flag == 1)
+           break;
         if (philo->id % 2 != 0)
             odd_take_forks(philo);
         else
@@ -76,11 +84,10 @@ void    *routine(void   *arg)
             pthread_mutex_lock(&philo->cdata->monitor);
             philo->cdata->monitor_flag++;
             pthread_mutex_unlock(&philo->cdata->monitor);
-            // pthread_mutex_lock(&philo->mutex_eat);
-            // philo->start_eat = -1;
-            // pthread_mutex_lock(&philo->mutex_eat);
-            break ;
+            break;
         }
+        // if (philo->cdata->flag == 1)
+        //    break;
         sleeping(philo);
     }
     return (NULL);

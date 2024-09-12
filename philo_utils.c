@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:25:39 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/03 23:44:57 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:01:37 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int		my_printf(t_info *philo, char *str)
 {
 	size_t	time;
 
+	// if (philo->cdata->flag == 1)
+    //        return 0;
 	pthread_mutex_lock(&philo->cdata->time);
 	time = get_current_time() - philo->cdata->start_time;
 	pthread_mutex_lock(&philo->cdata->print);
