@@ -1,0 +1,1 @@
+----> no philosopher should die in this test ./philo add 310 100 100 (problem in odd numbers)

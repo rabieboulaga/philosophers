@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:13:54 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/12 18:54:43 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/13 19:59:47 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@ void    monitor(t_info *philo)
         pthread_mutex_lock(&philo->mutex_eat);
         if ((get_current_time()) - (philo->start_eat) > philo->cdata->t_die)
         {   
-            my_printf(philo, "this philo is die right now");
             philo->cdata->flag = 1;
-            pthread_mutex_unlock(&philo->mutex_eat);
+            my_printf(philo, "this philo is die right now");
+            exit(0);
             pthread_mutex_unlock(&philo->cdata->mutex_flag);
+            pthread_mutex_unlock(&philo->mutex_eat);
             break;
         }
-        pthread_mutex_unlock(&philo->mutex_eat);
         pthread_mutex_unlock(&philo->cdata->mutex_flag);
+        pthread_mutex_unlock(&philo->mutex_eat);
         philo = philo->right;
     }
 }

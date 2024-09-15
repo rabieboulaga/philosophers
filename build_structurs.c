@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:29:38 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/11 11:23:30 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/13 19:55:01 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void    elements(t_info *philo, t_data *data)
     philo->right = NULL;
     philo->left = NULL;
     philo->start_eat = 0;
+    data->monitor_flag = 0;
     list_info(philo, data->philos);
     while (tmp->right)
         tmp = tmp->right;
