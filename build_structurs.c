@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:29:38 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/13 19:55:01 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/17 19:50:12 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ int    build_structurs(int ac, char **av, t_info *philo, t_data *data)
     data->t_sleep = ft_atoi(av[4]);
     pthread_mutex_init(&philo->fork, NULL);
     pthread_mutex_init(&philo->mutex_eat, NULL);
-    pthread_mutex_init(&data->print, NULL);
-    pthread_mutex_init(&data->time, NULL);
     pthread_mutex_init(&data->mutex_flag, NULL);
     pthread_mutex_init(&data->monitor, NULL);
     if (ac == 6)

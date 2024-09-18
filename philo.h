@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:15:20 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/11 11:23:04 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/17 19:55:07 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@ typedef struct c_stack
     int flag_meals;
     size_t  start_time;
     pthread_mutex_t monitor;
-    pthread_mutex_t print;
-    pthread_mutex_t time;
     pthread_mutex_t mutex_flag;
 }   t_data;
 
 typedef struct c_info
 {
     pthread_mutex_t mutex_eat;
+    
+    
+    
     long long start_eat;
     int id;
     int l_meal;
@@ -65,6 +66,7 @@ int		    my_printf(t_info *philo, char *str);
 int         my_usleep(size_t    milliseconds);
 size_t	    get_current_time(void);
 void        monitor(t_info *philo);
+int         one_philo(t_info *philo, t_data *data);
 
 
 #endif
