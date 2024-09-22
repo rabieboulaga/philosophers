@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 15:29:38 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/17 19:50:12 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:54:39 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,23 @@ size_t	get_current_time(void)
 		write(2, "gettimeofday() error\n", 22);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
-int     my_usleep(size_t    milliseconds)
+int     my_usleep(size_t    milliseconds, t_info *philo)
 {
 	size_t	start;
 
 	start = get_current_time();
 	while ((get_current_time() - start) < milliseconds)
-		usleep(500);
-	return (0);
+	{	
+        pthread_mutex_lock(&philo->cdata->mutex_flag);
+        if (philo->cdata->flag == 1)
+        {   
+            pthread_mutex_unlock(&philo->cdata->mutex_flag); 
+            return 0;
+        }
+        pthread_mutex_unlock(&philo->cdata->mutex_flag);
+        usleep(500);
+    }
+    return (0);
 }
 
 void    list_info(t_info *philo, int n)
@@ -79,18 +88,21 @@ void    elements(t_info *philo, t_data *data)
 int    build_structurs(int ac, char **av, t_info *philo, t_data *data)
 {   
     memset(data, 0, sizeof(t_data));
-    data->philos = ft_atoi(av[1]);
-    data->t_die = ft_atoi(av[2]);
-    data->t_eat = ft_atoi(av[3]);
-    data->t_sleep = ft_atoi(av[4]);
+    data->int_m = 0;
+    data->philos = ft_atoi(av[1], data);
+    data->t_die = ft_atoi(av[2], data);
+    data->t_eat = ft_atoi(av[3], data);
+    data->t_sleep = ft_atoi(av[4], data);
     pthread_mutex_init(&philo->fork, NULL);
     pthread_mutex_init(&philo->mutex_eat, NULL);
     pthread_mutex_init(&data->mutex_flag, NULL);
     pthread_mutex_init(&data->monitor, NULL);
     if (ac == 6)
-        data->n_meals = ft_atoi(av[5]);
+        data->n_meals = ft_atoi(av[5], data);
     if (ac != 6)
-        data->flag_meals = -1; 
+        data->flag_meals = -1;
+    if (data->int_m)
+        return 1; 
     elements(philo, data);
     return 0;
 }

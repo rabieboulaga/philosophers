@@ -63,7 +63,7 @@ void	ft_lstadd_back(t_info *lst, t_info *nnew)
 // 	*list = new_element;
 // }
 
-long long	ft_atoi(const char *str)
+long long	ft_atoi(const char *str, t_data *data)
 {
 	int			i;
 	long long	res;
@@ -85,6 +85,8 @@ long long	ft_atoi(const char *str)
 		res = (res * 10) + (str[i] - 48);
 		i++;
 	}
+	if (res > 2147483647)
+		data->int_m = 1;
 	return (res * s);
 }
 

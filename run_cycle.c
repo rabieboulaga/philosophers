@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/27 12:51:39 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/17 19:43:05 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/21 16:27:43 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void    sleeping(t_info *philo)
     // }
     // pthread_mutex_unlock(&philo->cdata->mutex_flag);
     my_printf(philo, "is sleeping");
-    my_usleep(philo->cdata->t_sleep);
+    my_usleep(philo->cdata->t_sleep, philo);
     pthread_mutex_lock(&philo->cdata->mutex_flag);
     if (philo->cdata->flag == 1)
     {   
@@ -51,7 +51,7 @@ int    even_take_forks(t_info *philo)
     philo->start_eat = get_current_time();
     pthread_mutex_unlock(&philo->mutex_eat);
     philo->l_meal--;
-    my_usleep(philo->cdata->t_eat);
+    my_usleep(philo->cdata->t_eat, philo);
     pthread_mutex_unlock(&philo->right->fork);
     pthread_mutex_unlock(&philo->fork);
     return 0;
@@ -70,8 +70,8 @@ int    odd_take_forks(t_info *philo)
     pthread_mutex_unlock(&philo->mutex_eat);
     my_printf(philo, "is eating");
     philo->l_meal--;
-    my_usleep(philo->cdata->t_eat);
-    pthread_mutex_unlock(&philo->right->fork);
+    my_usleep(philo->cdata->t_eat, philo);
+    pthread_mutex_unlock(&philo->right->    fork);
     pthread_mutex_unlock(&philo->fork);
     return 0;
 }

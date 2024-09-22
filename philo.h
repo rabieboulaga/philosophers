@@ -6,7 +6,7 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:15:20 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/17 19:55:07 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:58:56 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,16 @@ typedef struct c_stack
     size_t  start_time;
     pthread_mutex_t monitor;
     pthread_mutex_t mutex_flag;
+    int     int_m;
 }   t_data;
 
 typedef struct c_info
 {
-    pthread_mutex_t mutex_eat;
-    
-    
-    
     long long start_eat;
     int id;
     int l_meal;
     pthread_t thread;
+    pthread_mutex_t mutex_eat;
     pthread_mutex_t fork;
     struct c_stack *cdata;
     struct c_info *right;
@@ -55,18 +53,16 @@ typedef struct c_info
     size_t         the_deid;
 }   t_info;
 
-long long	ft_atoi(const char *str);
 int         parsing(int ac, char **av);
 int         build_structurs(int ac, char **av, t_info *philo, t_data *data);
-// void	    ft_lstadd_front(t_info **list, t_info *new_element);
 void	    ft_lstadd_back(t_info *lst, t_info *nnew);
 int         philo(int ac, char **av);
 void        run_cycle(t_data *data, t_info *philo);
 int		    my_printf(t_info *philo, char *str);
-int         my_usleep(size_t    milliseconds);
+int         my_usleep(size_t    milliseconds, t_info *philo);
 size_t	    get_current_time(void);
 void        monitor(t_info *philo);
-int         one_philo(t_info *philo, t_data *data);
-
+void         one_philo(t_info *philo, t_data *data);
+long long	ft_atoi(const char *str, t_data *data);
 
 #endif

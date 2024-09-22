@@ -6,12 +6,32 @@
 /*   By: rboulaga <rboulaga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:13:54 by rboulaga          #+#    #+#             */
-/*   Updated: 2024/09/17 19:58:50 by rboulaga         ###   ########.fr       */
+/*   Updated: 2024/09/21 21:58:12 by rboulaga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-# include <pthread.h>
+#include <pthread.h>
+
+void    free_all(t_data *data, t_info *philo)
+{
+    t_info *tmp;
+    int n;
+
+    n = data->philos;
+    pthread_mutex_destroy(&data->monitor);
+    pthread_mutex_destroy(&data->mutex_flag);
+    pthread_mutex_destroy(&philo->mutex_eat);
+    pthread_mutex_destroy(&philo->fork);
+    while (n)
+    {
+        n--;
+        tmp = philo->right;
+        free(philo);
+        philo = tmp;
+    }
+    free(data);
+}
 
 int     bye(t_info  *philo)
 {
@@ -61,10 +81,11 @@ int philo(int ac, char **av)
         data = malloc(sizeof(t_data));
         philo->cdata = data;
         if (build_structurs(ac, av, philo, data) == 1) 
-            return (1);
-        if (one_philo(philo, data))
-            return 0;                   
+            return (free(philo),free(data) , 1);
+        else if(data->philos == 1)
+            return (one_philo(philo, data) ,0);
         run_cycle(data, philo);
+        free_all(data, philo);
     }
     else
         return (1);
